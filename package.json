@@ -1,0 +1,33 @@
+{
+  "name": "todo-server-app",
+  "version": "1.0.0",
+  "description": "the serverside code for todo",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Micode360/Todo-App.git"
+  },
+  "keywords": [
+    "[\"todo\"",
+    "\"miracle\"",
+    "\"simple\"",
+    "\"todo",
+    "app\"]"
+  ],
+  "author": "Abaye Miracle King",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Micode360/Todo-App/issues"
+  },
+  "homepage": "https://github.com/Micode360/Todo-App#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.3"
+  },
+  "devDependencies": {}
+}
