@@ -10,7 +10,7 @@ const registerSchema = new Schema ({
         type: String,
         required: true 
     },
-    email: {
+    username: {
         type: String,
         required: true 
     },
@@ -22,6 +22,6 @@ const registerSchema = new Schema ({
     timestamps:true,
 });
 
-const registerData = mongoose.model('registerData', registerSchema);
+const registerModel = mongoose.model('registerModel', registerSchema);
 
-module.exports = registerData;
+module.exports = registerModel;

@@ -125,10 +125,14 @@ form{
 }
 
 .form{
-  padding: 60px 0 !important;
+  padding: 30px 0 !important;
   width: 30vw;
 }
 
+
+.form-title{
+    justify-content: center;
+}
 
 
 .submit {

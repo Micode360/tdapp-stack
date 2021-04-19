@@ -12,7 +12,7 @@ app.use(express.json({ extended: false }));
 
 //routes
 app.use('/api/users', require('./routes/user'));
-app.use('/register', require('./routes/auth'));
+app.use('/signUp', require('./routes/auth'));
 
 app.get('/message', (req , res)=> {
     res.json({message: "Server is alive"})

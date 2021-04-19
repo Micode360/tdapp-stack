@@ -19,7 +19,7 @@ export default class Darshboard extends Component {
         );
         }else{
             return (
-                <Redirect to="/register"/>
+                <Redirect to="/signUp"/>
         );
         }
     }
