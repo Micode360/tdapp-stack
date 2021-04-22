@@ -24,6 +24,17 @@ body{
 
 
 
+/*form*/
+
+.message{
+  display: flex;
+  justify-content: center;
+  background-color: #085797;
+  padding:6px;
+  margin: 12px 0;
+  color: #ffffff;
+  border-radius:4px;
+}
 
 form{
   width: 54vw;

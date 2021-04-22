@@ -1,17 +1,28 @@
 import axios from "axios";
-import { REGISTER_SUCCESS } from "../types"
+import { 
+   REGISTER_SUCCESS,
+   REGISTER_FAIL
+ } from "../types"
 
-export const registerationAction = async (state) => {
-        axios.post('http://localhost:5000/signUp/post', state).then((res) => {
-            return res.json();
-    }).then(data => {
-        console.log(data, 'action')
-        return data
-    }).catch((err)=>{
-        console.log(err, 'error')
-        return err;
-    })
-}
+
+
+
+    export const registerationAction = (state) => {
+      return (dispatch, getState) => {
+               axios.post('http://localhost:5000/signUp/post', state)
+                 .then((response) => {
+                  dispatch({ type:REGISTER_SUCCESS, payload: response.data.message})
+                 }).catch((err) => {
+                  dispatch({ type:REGISTER_FAIL, payload: 'SignUp Failed' })
+                 })
+      }
+
+   }
+
+
+
+
+
 
 
 

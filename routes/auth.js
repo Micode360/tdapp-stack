@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 //const passport = require('passport');
-const jwToken = require('jsonwebtoken');
-const jwtSecret = require('../config/keys').jwtSecret; 
+// const jwToken = require('jsonwebtoken');
+// const jwtSecret = require('../config/keys').jwtSecret; 
 const registerModel = require('../models/register');
 
 
@@ -24,28 +24,31 @@ router.post('/post', async (req, res) => {
     }).catch(err => err);
     newUserData.password = crypted;
     newUserData.save()
+    .then(() => res.json({message: "You have successfully registered"}))
     .catch(err => res.status(400).json('Reg Error' + err));
+
     
-        const payload = {
-            user: {
-                id: newUserData._id,
-            }
-        };
+        // const payload = {
+        //     user: {
+        //         id: newUserData._id,
+        //     }
+        // };
 
-        jwToken.sign(
-            payload,
-            jwtSecret,
-            {expiresIn: 5000},
-            (err, token) => {
-                if(err) throw err;
-                const successMessage = {
-                    success: 'token success',
-                    token: token
-                }
+        // jwToken.sign(
+        //     payload,
+        //     jwtSecret,
+        //     {expiresIn: 5000},
+        //     (err, token) => {
+        //         if(err) throw err;
+        //         const successMessage = {
+        //             success: 'New User Created',
+        //             token: token
+        //         }
 
-                res.json(successMessage);
-            }
-        )
+        //         res.json(successMessage)
+                
+        //     }
+        // )
 });
 
 module.exports = router
