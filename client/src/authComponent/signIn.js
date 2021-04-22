@@ -1,14 +1,29 @@
 import { Component } from "react"
 import { Form, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
+import { connect } from "react-redux"
+import { signInAction } from "../dataservices/auth/authAction"
 
 
+const mapStateToProps = (state) => {
+        return {
+            signInErrorMessage: state.auth.signInErrorMessage 
+        }
+}
 
-export default class SignIn extends Component {
+const mapDispatchToProps = (dispatch) => {
+    return {
+        signInAction: (state) => dispatch(signInAction(state))
+    }
+}
+
+
+const SignIn = connect(mapStateToProps, mapDispatchToProps)(
+    class extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            email: "",
+            username: "",
             password: ""
         }
     }
@@ -20,29 +35,28 @@ export default class SignIn extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-         console.log(this.state);
+        this.props.signInAction(this.state)
     }
 
 
     render() {
-
+        const { signInErrorMessage } = this.props
         return (
             <div className="reg-form">
+                {<div>{ signInErrorMessage?<Row className="message">{ signInErrorMessage }</Row>:null}</div> }
+
                 <Form className="form" onSubmit={this.handleSubmit}>
                     <Row className="form-title"><h2>SignIn</h2></Row>
 
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
-
-                        <Form.Control
-                            type="email"
-                            placeholder="Enter email"
-                            name="email"
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                        />
-
-                    </Form.Group>
+                    <Form.Group controlId="formBasicUsername">
+                            <Form.Label>Username</Form.Label>
+                                <Form.Control 
+                                placeholder="Username"
+                                name="username"
+                                value={this.state.username}
+                                onChange={this.handleChange}
+                                 />
+                            </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
@@ -63,3 +77,7 @@ export default class SignIn extends Component {
         )
     }
 }
+)
+
+
+export default SignIn

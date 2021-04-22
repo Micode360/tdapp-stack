@@ -7,7 +7,8 @@ import { registerationAction } from "../dataservices/auth/authAction"
 
 const mapStateToprops = (reducerState)  => {
     return  {
-        authRegMessage: reducerState.auth.authRegMessage 
+        authRegMessage: reducerState.auth.authRegMessage,
+        authErrorMessage: reducerState.auth.authErrorMessage
     }
 }
 
@@ -40,27 +41,17 @@ const SignUp = connect(mapStateToprops, mapDispatchToProps)(
     
         handleSubmit = (event) => {
             event.preventDefault();
-            if(this.state.password !== this.state.confirmPassword) console.log('password doesnt match');
-            else {
-                this.props.registerationAction(this.state);
-            }
-           
+                this.props.registerationAction(this.state);  
         }
     
     
         render() {
-            const { authRegMessage } = this.props
-            const message = () => {
-                if(authRegMessage === 'You have successfully registered'){
-                  //  <Row className="message">You have successfully registered</Row>
-                   // setTimeout(() =><Redirect to="/signIn"/>, 2000);
-                   return <Redirect to="/signIn"/>;
-                }else return null;
-            } 
+            const { authErrorMessage, authRegMessage } = this.props
+
             return (
                 <div className="reg-form">
-
-                 <div>{message()}</div>
+                {<div>{authErrorMessage?<Row className="message">{ authErrorMessage }</Row>:null}</div> }
+                {authRegMessage?<Redirect to="/signIn"/>:null}
                     <Form className="form" onSubmit={this.handleSubmit}>
                         <Row className="form-title"><h2>SignUp</h2></Row>
                         <Form.Row className="mb-3">
@@ -84,15 +75,15 @@ const SignUp = connect(mapStateToprops, mapDispatchToProps)(
                             </Col>
                         </Form.Row>
     
-                        <Form.Row>
-                        <Form.Label>Username</Form.Label>
+                        <Form.Group controlId="formBasicUsername">
+                            <Form.Label>Username</Form.Label>
                                 <Form.Control 
                                 placeholder="Username"
                                 name="username"
                                 value={this.state.username}
                                 onChange={this.handleChange}
                                  />
-                        </Form.Row>
+                            </Form.Group>
     
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>

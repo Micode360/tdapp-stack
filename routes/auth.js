@@ -6,11 +6,30 @@ const bcrypt = require('bcrypt');
 const registerModel = require('../models/register');
 
 
-router.post('/post', async (req, res) => {
+router.post('/signUp', async (req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const username = req.body.username;
     const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
+
+      const existingUsername = await registerModel.findOne({username}).select("-password");
+
+        if(existingUsername) {
+            res.status(401).json('Username has been taken')
+            return;
+        }
+
+        if(password.length < 6) {
+            res.status(401).json('Password must be more than 6 characters')
+            return;
+        }
+
+        if(password !== confirmPassword){
+            res.status(401).json('password doesnt match');
+            return;
+        }
+
 
     const newUserData = new registerModel({
         firstName,
@@ -50,5 +69,13 @@ router.post('/post', async (req, res) => {
         //     }
         // )
 });
+
+
+router.post('/signIn', async (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    console.log(username, password);
+})
 
 module.exports = router
