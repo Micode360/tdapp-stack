@@ -4,7 +4,9 @@ import SignUp from "./authComponent/signUp"
 import SignIn from "./authComponent/signIn"
 
 
+
 function App() {
+  
   return (
     <Router>
       <Switch>

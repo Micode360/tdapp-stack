@@ -50,8 +50,8 @@ const SignUp = connect(mapStateToprops, mapDispatchToProps)(
 
             return (
                 <div className="reg-form">
-                {<div>{authErrorMessage?<Row className="message">{ authErrorMessage }</Row>:null}</div> }
                 {authRegMessage?<Redirect to="/signIn"/>:null}
+                {<div>{authErrorMessage?<Row className="message">{ authErrorMessage }</Row>:null}</div> }
                     <Form className="form" onSubmit={this.handleSubmit}>
                         <Row className="form-title"><h2>SignUp</h2></Row>
                         <Form.Row className="mb-3">

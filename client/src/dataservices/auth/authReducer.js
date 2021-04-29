@@ -9,7 +9,8 @@ import {
 const initialState = {
     authRegMessage: null,
     authErrorMessage: null,
-    signInErrorMessage: null
+    signInErrorMessage: null,
+    signInSuccessPayload: null
 }
 
 
@@ -20,10 +21,11 @@ export default function authReducer (state = initialState, action) {
         case REGISTER_FAIL:
             return { ...state, authErrorMessage: action.payload }
         case LOGIN_SUCCESS:
-            console.log(action, 'login successful')
-            return { ...state, authRegMessage: action.payload }
+            console.log(action, "login success");
+            localStorage.setItem('access-tkn', action.payload.token)
+            return { ...state, signInSuccessPayload: action.payload }
         case LOGIN_FAIL:
-        console.log(action, 'login fail')
+            console.log(action, "login fail");
         return { ...state, signInErrorMessage: action.payload }
         default:
             break;

@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-//const passport = require('passport');
-// const jwToken = require('jsonwebtoken');
-// const jwtSecret = require('../config/keys').jwtSecret; 
+const passport = require('passport');
+const jwToken = require('jsonwebtoken');
+const jwtSecret = require('../config/keys').jwtSecret; 
 const registerModel = require('../models/register');
+
 
 
 router.post('/signUp', async (req, res) => {
@@ -45,37 +46,57 @@ router.post('/signUp', async (req, res) => {
     newUserData.save()
     .then(() => res.json({message: "You have successfully registered"}))
     .catch(err => res.status(400).json('Reg Error' + err));
-
-    
-        // const payload = {
-        //     user: {
-        //         id: newUserData._id,
-        //     }
-        // };
-
-        // jwToken.sign(
-        //     payload,
-        //     jwtSecret,
-        //     {expiresIn: 5000},
-        //     (err, token) => {
-        //         if(err) throw err;
-        //         const successMessage = {
-        //             success: 'New User Created',
-        //             token: token
-        //         }
-
-        //         res.json(successMessage)
-                
-        //     }
-        // )
 });
 
 
 router.post('/signIn', async (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
 
-    console.log(username, password);
+    passport.authenticate('local',
+    {
+        successRedirect: '/',
+        failureFlash: true
+    }, (err, user) => {
+        console.log(user, 'user at the front');
+        if (err){
+            res.status(401).res.json({error: err})
+            return;
+        } 
+       if (!user) return res.status(401).json("Check your email or password");
+        if(req.body.password.length < 6) {
+            res.status(401).json('Password must be more than 6 characters')
+            return;
+        }
+        else {
+                    jwToken.sign({
+                user: {
+                    id: user._id,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    username: user.username
+                }
+            },
+                jwtSecret,
+                {expiresIn: '1d'},
+                (err, token) => {
+                    if(err) throw err;
+                    res.send({
+                        success: 'token success',
+                        token: token
+                    });
+                }
+            )
+        }
+    })(req, res);
+
 })
+
+
+// router.post('/signIn', async (req, res, next) => {
+//     passport.authenticate('local',
+//     {
+//         failureFlash: true,
+//     })(req, res, next);
+// })
+
 
 module.exports = router

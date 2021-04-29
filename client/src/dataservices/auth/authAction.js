@@ -12,8 +12,8 @@ import {
     export const registerationAction = (state) => {
       return (dispatch, getState) => {
                axios.post('http://localhost:5000/auth/signUp', state)
-                 .then((response) => {
-                   dispatch({ type:REGISTER_SUCCESS })
+                 .then(() => {
+                   dispatch({ type:REGISTER_SUCCESS, payload:'Registeration success' })
                  }).catch((err) => {                 
                   if (err.response) {
                   dispatch({ type:REGISTER_FAIL, payload: err.response.data })
@@ -22,19 +22,20 @@ import {
       }
    }
 
-   export const  signInAction = (state) => {
+   export const signInAction = (state) => {
       return (dispatch, getState) => {
                axios.post('http://localhost:5000/auth/signIn', state)
                  .then((response) => {
-                   dispatch({ type:LOGIN_SUCCESS, payload: response })
+                   console.log(response, 'response');
+                   dispatch({ type:LOGIN_SUCCESS, payload: response.data })
                  }).catch((err) => {                 
                   if (err.response) {
-                  dispatch({ type:LOGIN_FAIL, payload: err.response.data })
+                    console.log(err, 'err');
+                   dispatch({ type:LOGIN_FAIL, payload: err.response.data })
               }
             })
       }
    }
-
 
 
 

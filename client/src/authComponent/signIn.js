@@ -1,13 +1,14 @@
 import { Component } from "react"
 import { Form, Row } from "react-bootstrap"
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 import { connect } from "react-redux"
 import { signInAction } from "../dataservices/auth/authAction"
 
 
 const mapStateToProps = (state) => {
         return {
-            signInErrorMessage: state.auth.signInErrorMessage 
+            signInErrorMessage: state.auth.signInErrorMessage,
+            signInSuccessPayload: state.auth.signInSuccessPayload
         }
 }
 
@@ -40,13 +41,16 @@ const SignIn = connect(mapStateToProps, mapDispatchToProps)(
 
 
     render() {
-        const { signInErrorMessage } = this.props
+        const { signInErrorMessage, signInSuccessPayload } = this.props
+        console.log(signInSuccessPayload, 'signInSuccessPayload');
         return (
             <div className="reg-form">
-                {<div>{ signInErrorMessage?<Row className="message">{ signInErrorMessage }</Row>:null}</div> }
-
+                {signInSuccessPayload?<Redirect to="/"/>:null}
+                {<div>{ signInErrorMessage?<Row className="message text-center">{ signInErrorMessage }</Row>:null}</div> }
                 <Form className="form" onSubmit={this.handleSubmit}>
-                    <Row className="form-title"><h2>SignIn</h2></Row>
+                    <Row className="form-title">
+                        <h2>SignIn</h2>
+                    </Row>
 
                     <Form.Group controlId="formBasicUsername">
                             <Form.Label>Username</Form.Label>
@@ -56,7 +60,7 @@ const SignIn = connect(mapStateToProps, mapDispatchToProps)(
                                 value={this.state.username}
                                 onChange={this.handleChange}
                                  />
-                            </Form.Group>
+                    </Form.Group>
 
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
@@ -71,7 +75,9 @@ const SignIn = connect(mapStateToProps, mapDispatchToProps)(
                     </Form.Group>
 
                     <button className="send submit">Send</button>
-                    <Form.Text className="text-muted"><p>Don't Have an account? <Link to="/signUp">SignUp</Link></p></Form.Text>
+                    <Form.Text className="text-muted">
+                        <p>Don't Have an account? <Link to="/signUp">SignUp</Link></p>
+                    </Form.Text>
                 </Form>
             </div>
         )
