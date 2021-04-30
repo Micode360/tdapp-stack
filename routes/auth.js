@@ -56,7 +56,7 @@ router.post('/signIn', async (req, res) => {
         successRedirect: '/',
         failureFlash: true
     }, (err, user) => {
-        console.log(user, 'user at the front');
+
         if (err){
             res.status(401).res.json({error: err})
             return;

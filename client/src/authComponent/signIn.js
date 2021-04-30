@@ -42,7 +42,6 @@ const SignIn = connect(mapStateToProps, mapDispatchToProps)(
 
     render() {
         const { signInErrorMessage, signInSuccessPayload } = this.props
-        console.log(signInSuccessPayload, 'signInSuccessPayload');
         return (
             <div className="reg-form">
                 {signInSuccessPayload?<Redirect to="/"/>:null}

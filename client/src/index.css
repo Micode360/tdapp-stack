@@ -1,27 +1,145 @@
 body{
   padding: 0;
   margin: 0;
+  /* background: rgb(22,17,71);
+background: radial-gradient(circle, rgba(22,17,71,1) 0%, rgba(22,17,71,1) 50%, rgba(17,13,57,1) 98%); */
+background: rgb(250,250,250);
+background: radial-gradient(circle, rgba(250,250,250,1) 0%, rgba(230,230,230,1) 100%);
 }
 
 .header{
-  padding: 25px;
-  border-bottom: 1px solid rgb(241, 233, 233)
+  padding: 13px 13px;
+  margin: 30px 30px 0 30px;
+  background-color: #202638;
+  border-radius: 4px;
+  color:#ffffff;
+  position: relative;
 }
 
 .header h4{
+  position: absolute;
+  left: 30px;
   font-size: 18px;
+  margin-bottom: 0;
+}
+
+.t-navbar{
+  font-size: 14px !important;
+}
+
+.t-navbar a{
+  text-decoration: none !important;
+  color: #ffffff !important;
+}
+
+.profile-pic{
+  background-color: #06080c;
+  width: 30px;
+  height: 30px;
+  margin-top: 0 !important;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-pic a{
+  padding: 0;
+}
+
+.profile-options{
+  background-color: #242a3f;
+  position: absolute;
+  right: 0px;
+  bottom: -35px;
+  padding: 4px 12px;
+  width: 100px;
+  text-align: center;
+  border-radius: 2px;
+  cursor: pointer;
 }
 
 
 .App{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
   padding: 25px;
 }
 
+
+.main{
+    padding: 30px 0 0 0;
+}
+
+.title-header{
+  font-size: 40px !important;
+}
+
+.title-header p:nth-child(1){
+  margin-bottom: 5px !important;
+}
+
+.username{
+    font-weight: 500;
+    padding-left: 12px;
+}
+
+.title-header-quote{
+  font-size: 20px !important;
+  margin:  0 0 !important;
+}
+ 
+
+.t-card-container{
+  margin-top: 40px;
+}
+
+.t-card{
+  background-color: #202638;
+  /* width: 200px; */
+  color: #ffffff;
+  border-radius: 4px;
+  word-wrap: break-word;
+  padding: 8px 12px;
+  margin-bottom: 15px;
+}
+
+.t-time{
+  font-size:14px;
+  color: #aca5a5;
+}
+
+.t-card-description {
+  font-size: 16px;
+  margin-top: 12px;
+}
+
+
+aside{
+  padding: 15px;
+}
+
+.t-notification-header{
+  background-color: #fff2cc;
+  padding: 8px 8px;
+  border: 1px solid #f0d58d;
+}
+
+.t-notification-header h5{
+  font-weight: normal;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+
+                                  
+.notify-case{
+  margin-top: 15px;
+  background-color: #fff2cc;
+  padding: 6px 8px;
+  font-size: 14px;
+  border: 1px solid #f0d58d;
+}
 
 
 /*form*/

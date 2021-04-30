@@ -26,16 +26,15 @@ import {
       return (dispatch, getState) => {
                axios.post('http://localhost:5000/auth/signIn', state)
                  .then((response) => {
-                   console.log(response, 'response');
                    dispatch({ type:LOGIN_SUCCESS, payload: response.data })
                  }).catch((err) => {                 
                   if (err.response) {
-                    console.log(err, 'err');
                    dispatch({ type:LOGIN_FAIL, payload: err.response.data })
               }
             })
       }
    }
+
 
 
 
