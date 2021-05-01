@@ -1,44 +1,44 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom"
-import { SignOutUser } from "../dataservices/user/userAction"
-import { LOGOUT_SUCCESS } from "../dataservices/types"
+import { Link } from "react-router-dom"
+import { SignOutUser } from "../dataservices/auth/authAction"
 
 const mapStateToProps = (state) => {
     return {
-        logOutSuccessMessage: state.user.logOutSuccessMessage
+        logOutSuccessMessage: state.auth.logOutSuccessMessage
     }
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        SignOutUser: (action) => dispatch(SignOutUser(action))
+        SignOutUser: () => dispatch(SignOutUser())
     }
 }
 
 const HeaderContainer = connect(mapStateToProps, mapDispatchToProps)(
     class extends Component  {
 
-        logOut = () => {
-            return this.props.SignOutUser(LOGOUT_SUCCESS)
-        }
-        render() {
-            const { logOutSuccessMessage } = this.props
 
+        render() {
+            const { logOutSuccessMessage, user } = this.props
+            
             return (
                 <div className="header d-flex justify-content-end align-items-center">
                 <h4>mctivity</h4>
-                {logOutSuccessMessage?<Redirect to="/signIn"/>: null}
+                {logOutSuccessMessage?window.location.reload(): null}
                 <ul className="nav t-navbar d-flex align-items-center">
                     <li className="nav-item">
-                        <a className="nav-link pt-0 pb-0" href="#!">Wet</a>
+                        <Link className="nav-link pt-0 pb-0" to='/add_activity'>input</Link>
                     </li>
                     <li className="nav-item profile-pic rounded-circle text-center">
-                        MS
+                    {/*user.firstName.charAt(0).toUpperCase()}{user.lastName.charAt(0).toUpperCase()*/}
+                    JS
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link pt-0 pb-0" href="#!">Mathew Speed</a>
+                        <a className="nav-link pt-0 pb-0" href="#!">{user.firstName} {user.lastName}</a>
                         <div className="profile-options">
-                            <span onClick={this.logOut}>Log Out</span>
+                            <span onClick={()=>{
+                                    return this.props.SignOutUser()
+                            }}>Log Out</span>
                         </div>
                     </li>
                 </ul>

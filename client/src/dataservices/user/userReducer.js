@@ -1,21 +1,16 @@
-import {
-    LOGOUT_SUCCESS
-} from '../types'
 
 
-const initialState = {
-    logOutSuccessMessage: null
-};
+// const initialState = {
+    
+// };
 
 
-export default function userReducer (state = initialState, action) {
-    switch (action.type) {
-        case LOGOUT_SUCCESS:
-                localStorage.removeItem('access-tkn');
-             return { ...state, logOutSuccessMessage : action.type } 
-        default:
-            break;
-    }
+export default function userReducer (state = null, action) {
+    // switch (action.type) {
+
+    //     default:
+    //         break;
+    // }
     return state
 
 }

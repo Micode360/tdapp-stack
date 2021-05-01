@@ -3,12 +3,11 @@ import {
    REGISTER_SUCCESS,
    REGISTER_FAIL,
    LOGIN_SUCCESS,
-   LOGIN_FAIL
+   LOGIN_FAIL,
+   LOGOUT_SUCCESS
  } from "../types"
 
-
-
-
+ 
     export const registerationAction = (state) => {
       return (dispatch, getState) => {
                axios.post('http://localhost:5000/auth/signUp', state)
@@ -35,7 +34,15 @@ import {
       }
    }
 
+   
 
+
+  export const SignOutUser = () => {
+    return (dispatch, getState) =>{
+        dispatch({type: LOGOUT_SUCCESS })
+    }
+
+  }
 
 
 

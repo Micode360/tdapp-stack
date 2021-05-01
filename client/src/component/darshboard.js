@@ -1,9 +1,9 @@
 import { Component } from "react"
-import { Redirect, Link } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
 import { connect } from "react-redux"
 import jwt_decode from "jwt-decode";
 import HeaderContainer from "./header";
-
+import axios from "axios"
 
 
 
@@ -19,6 +19,27 @@ const mapDispatchToProps = () => {
 
 const Darshboard = connect(mapStateToProps, mapDispatchToProps)(
     class extends Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                load: []
+            };
+        }
+
+
+        componentDidMount() {
+            let onloadTkn = localStorage.getItem('access-tkn');
+            if (!onloadTkn) return;
+            else {
+                let decode = jwt_decode(onloadTkn);
+                axios.get(`/users/${decode.user.id}`)
+                    .then((user) => {
+                        this.setState({ load: user.data })
+                    }).catch(err => {
+                        return err
+                    })
+            }
+        }
 
         render() {
             let tkn = localStorage.getItem('access-tkn');
@@ -28,16 +49,15 @@ const Darshboard = connect(mapStateToProps, mapDispatchToProps)(
 
             else {
                 let decoded = jwt_decode(tkn);
-                console.log(decoded, 'decoded');
                 if (decoded.exp - (Date.now() / 1000) <= 0) return (<Redirect to="/signIn" />)
                 return (
                     <>
-                        <HeaderContainer/>
-                        
+                        <HeaderContainer user={this.state.load} />
+
                         <div className="App">
                             <div className="main">
                                 <div className="title-header">
-                                    <p className="d-flex align-items-center">Hello <span className="username">{decoded.user.firstName} {decoded.user.lastName}</span></p>
+                                    <p className="d-flex align-items-center">Hello <span className="username">{this.state.load.firstName} {this.state.load.lastName}</span></p>
                                     <p className="title-header-quote">Welcome back. What do you want to do today?</p>
                                 </div>
 

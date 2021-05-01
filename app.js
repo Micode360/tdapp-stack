@@ -41,7 +41,7 @@ app.use((req, res, next) => {
 
 
 //routes
-app.use('/api/users', require('./routes/user'));
+app.use('/users', require('./routes/user'));
 app.use('/auth', require('./routes/auth'));
 
 app.get('/message', (req , res)=> {

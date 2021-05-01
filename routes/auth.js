@@ -56,7 +56,6 @@ router.post('/signIn', async (req, res) => {
         successRedirect: '/',
         failureFlash: true
     }, (err, user) => {
-
         if (err){
             res.status(401).res.json({error: err})
             return;
@@ -69,10 +68,7 @@ router.post('/signIn', async (req, res) => {
         else {
                     jwToken.sign({
                 user: {
-                    id: user._id,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    username: user.username
+                    id: user._id
                 }
             },
                 jwtSecret,

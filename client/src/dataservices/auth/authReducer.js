@@ -2,7 +2,8 @@ import {
     REGISTER_SUCCESS,
     REGISTER_FAIL,
     LOGIN_SUCCESS,
-    LOGIN_FAIL
+    LOGIN_FAIL,
+    LOGOUT_SUCCESS
 } from '../types'
 
 
@@ -10,7 +11,8 @@ const initialState = {
     authRegMessage: null,
     authErrorMessage: null,
     signInErrorMessage: null,
-    signInSuccessPayload: null
+    signInSuccessPayload: null,
+    logOutSuccessMessage: null
 }
 
 
@@ -25,6 +27,9 @@ export default function authReducer (state = initialState, action) {
             return { ...state, signInSuccessPayload: action.payload }
         case LOGIN_FAIL:
         return { ...state, signInErrorMessage: action.payload }
+        case LOGOUT_SUCCESS:
+                localStorage.removeItem('access-tkn');
+             return { ...state, logOutSuccessMessage : action.type } 
         default:
             break;
     }
