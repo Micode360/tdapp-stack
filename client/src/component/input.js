@@ -12,15 +12,17 @@ export default class Input extends Component {
         super(props);
         this.state = {
             text: '',
-            value: [],
+            value: [], 
             modalValue: false,
             valueToUpdate: ''
         };
     }
 
+
     myChangeHandler = (event) => {
         this.setState({ text: event.target.value });
     }
+
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -32,12 +34,15 @@ export default class Input extends Component {
         }
     }
 
+
+
     deleteValue = (id) => {
         const modifyStateContent = this.state.value.filter((item) => {
             return item.id !== id;
         })
         this.setState({ value: modifyStateContent })
     }
+
 
     updateValue = (id) => {
         const getValueById = this.state.value.filter((item) => {
@@ -51,6 +56,7 @@ export default class Input extends Component {
     }
 
 
+
     setUpdateToState = (val) => {
        if(val.value === "") return <AlertComponent message={'success'} style={{"display":"none"}}/>
         else {
@@ -62,7 +68,6 @@ export default class Input extends Component {
             })
         }
     }
-
 
 
     modalValue = (bool) => {

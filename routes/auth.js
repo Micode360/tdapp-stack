@@ -87,12 +87,7 @@ router.post('/signIn', async (req, res) => {
 })
 
 
-// router.post('/signIn', async (req, res, next) => {
-//     passport.authenticate('local',
-//     {
-//         failureFlash: true,
-//     })(req, res, next);
-// })
+
 
 
 module.exports = router

@@ -1,20 +1,25 @@
 import { Component } from "react"
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 import { connect } from "react-redux"
-import jwt_decode from "jwt-decode";
-import HeaderContainer from "./header";
+import jwt_decode from "jwt-decode"
+import HeaderContainer from "./header"
+import { loadData } from "../dataservices/user/userAction"
+import  AddActivity  from "./addActivity"
 import axios from "axios"
 
 
 
-const mapStateToProps = (reducerState) => {
+const mapStateToProps = (state) => {
     return {
-        signInSuccessPayload: reducerState.auth.signInSuccessPayload,
+        signInSuccessPayload: state.auth.signInSuccessPayload,
+        loadData: state.user.loadData
     }
 }
 
-const mapDispatchToProps = () => {
-    return {}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadData: (data) => dispatch(loadData(data))
+    }
 }
 
 const Darshboard = connect(mapStateToProps, mapDispatchToProps)(
@@ -22,7 +27,8 @@ const Darshboard = connect(mapStateToProps, mapDispatchToProps)(
         constructor(props) {
             super(props);
             this.state = {
-                load: []
+                load: [],
+                initials: ''
             };
         }
 
@@ -32,9 +38,12 @@ const Darshboard = connect(mapStateToProps, mapDispatchToProps)(
             if (!onloadTkn) return;
             else {
                 let decode = jwt_decode(onloadTkn);
-                axios.get(`/users/${decode.user.id}`)
+                axios.get(`/user/${decode.user.id}`)
                     .then((user) => {
-                        this.setState({ load: user.data })
+                        let firstName = user.data.firstName.charAt(0).toUpperCase();
+                        let lastName = user.data.lastName.charAt(0).toUpperCase();
+                        this.props.loadData({ load: user.data, initials: `${firstName}${lastName}` })
+                        this.setState({ load: user.data, initials: `${firstName}${lastName}` })
                     }).catch(err => {
                         return err
                     })
@@ -42,55 +51,52 @@ const Darshboard = connect(mapStateToProps, mapDispatchToProps)(
         }
 
         render() {
+
             let tkn = localStorage.getItem('access-tkn');
-
-
             if (!tkn) return (<Redirect to="/signIn" />)
-
             else {
                 let decoded = jwt_decode(tkn);
                 if (decoded.exp - (Date.now() / 1000) <= 0) return (<Redirect to="/signIn" />)
+
                 return (
                     <>
-                        <HeaderContainer user={this.state.load} />
+                        <HeaderContainer/>
 
                         <div className="App">
                             <div className="main">
                                 <div className="title-header">
-                                    <p className="d-flex align-items-center">Hello <span className="username">{this.state.load.firstName} {this.state.load.lastName}</span></p>
-                                    <p className="title-header-quote">Welcome back. What do you want to do today?</p>
+                                    <p className="d-flex align-items-center">Hey <span className="username">{this.state.load.firstName} {this.state.load.lastName}</span>, it's</p>
+                                    <p className="title-header-quote">Thursday <sup>10:14pm</sup></p>
+                                    <p className="date">17th March, 2021</p>
                                 </div>
 
-
                                 <div className="t-card-container">
-                                    <h2>Your Activities</h2>
-
-                                    <div className="t-card-map">
-
-                                        <div className="t-card">
-                                            <h2>
-                                                Take Sean to the park
-                                                    </h2>
-                                            <span className="t-time">15th September 2021</span>
-                                            <p className="t-card-description">Sean an i have a get together, we are looking forward to see...</p>
+                                        <div className="quote">
+                                            <p>Add Task</p>
+                                            <i class="far fa-circle"></i>
                                         </div>
-
-                                    </div>
-
                                 </div>
                             </div>
 
                             <aside>
-                                <div className="t-notification-header">
-                                    <h5>Notifications</h5>
+                                <div className="quote-output">
+                                    <div>
+                                        <input className="checked" type="checkbox" name="check" id="check" />
+                                    </div>
+                                    <div className="quote-output-text">
+                                        <p>Go for a walk with <span className="name">peter shawmaker</span></p>
+                                        <span className="quote-output-date">20th Tuesday 10:21am</span>
+                                    </div>
+                                    <span className="box-opt">
+                                          <i class="fas fa-square"></i>
+                                          <i class="fas fa-square"></i>
+                                          <i class="fas fa-square"></i>
+                                    </span>
                                 </div>
-                                <div className="notifications">
-                                    <div className="notify-case">
-                                        Sean wants to talk to you sooner than later.
-                                                </div>
-                                </div>
+                                
                             </aside>
                         </div>
+                        <AddActivity/>
                     </>
                 );
             }

@@ -6,14 +6,14 @@ const userSchema = new Schema ({
         type: mongoose.Schema.Types.ObjectId,
         ref: "register"
     },
-    todo: {
-        type: String,
-        required: true 
-    },
+    post: [{
+        title: {type: String, required: true },
+        body: {type: String, required: true }
+    }],
 },{
     timestamps:true,
 });
 
-const todoData = mongoose.model('todoData', userSchema);
+const activityModel = mongoose.model('activityModel', userSchema);
 
-module.exports = todoData;
+module.exports = activityModel;
