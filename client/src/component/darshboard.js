@@ -73,7 +73,7 @@ const Darshboard = connect(mapStateToProps, mapDispatchToProps)(
                                 <div className="t-card-container">
                                         <div className="quote">
                                             <p>Add Task</p>
-                                            <i class="far fa-circle"></i>
+                                            <i className="far fa-circle"></i>
                                         </div>
                                 </div>
                             </div>
@@ -88,9 +88,9 @@ const Darshboard = connect(mapStateToProps, mapDispatchToProps)(
                                         <span className="quote-output-date">20th Tuesday 10:21am</span>
                                     </div>
                                     <span className="box-opt">
-                                          <i class="fas fa-square"></i>
-                                          <i class="fas fa-square"></i>
-                                          <i class="fas fa-square"></i>
+                                          <i className="fas fa-square"></i>
+                                          <i className="fas fa-square"></i>
+                                          <i className="fas fa-square"></i>
                                     </span>
                                 </div>
                                 

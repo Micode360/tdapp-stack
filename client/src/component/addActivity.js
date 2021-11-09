@@ -3,6 +3,7 @@ import { Form, Modal } from "react-bootstrap"
 import { connect } from "react-redux"
 import { postActivity } from "../dataservices/user/userAction"
 import profilepic from "../img/my_image.jpg"
+import Upload from "./upload"
 
 
 const mapStateToProps = (state) => {
@@ -26,7 +27,8 @@ const AddActivity = connect(mapStateToProps, mapDispatchToProps)(
             super(props);
             this.state = {
                 body: '',
-                value: [], 
+                value: [],
+                uploadImage: '',
                 modalValue: false,
                 valueToUpdate: ''
             };
@@ -38,6 +40,8 @@ const AddActivity = connect(mapStateToProps, mapDispatchToProps)(
     
         handleSubmit = (e) => {
             e.preventDefault();
+            // const [body] = e.target.elements
+            //console.log(body.value, 'body');
             if (this.state.title === '') return;
             else {
                 // this.setState({ value: [...this.state.value, { title: this.state.title, body: this.state.body }] })
@@ -88,14 +92,20 @@ const AddActivity = connect(mapStateToProps, mapDispatchToProps)(
                                     placeholder="Add task"
                                     rows={3}
                                 />
+                                <div className="selected-img">
+                                    {this.state.uploadImage === ''?
+                                    ''
+                                    :<img src={this.state.uploadImage} alt="img"/>
+                                    }
+                                </div>
                                 <div className="task-button-options">
                                     <div className="mod-options">
-                                        <span className="mod-blck"><i class="far fa-smile"></i></span>
-                                        <span className="mod-blck"><i class="far fa-images"></i></span>
-                                        <span className="mod-blck"><i class="fas fa-map-marker-alt"></i></span>
-                                        <span className="mod-blck"><i class="fas fa-video"></i></span>
+                                        
+                                        <span className="mod-blck"><Upload imgSrc={this.state.uploadImage}/></span>
+                                        <span className="mod-blck"><i className="fas fa-map-marker-alt"></i></span>
+                                        <span className="mod-blck"><i className="fas fa-video"></i></span>
                                     </div>
-                                    <button className="add-task"><i class="fas fa-tasks"></i> Add Task</button>
+                                    <button className="add-task"><i className="fas fa-tasks"></i> Add Task</button>
                                 </div>
                             </Form>
                     </Modal.Body>
